@@ -1,8 +1,8 @@
 const ListasCompra = require('./listas-compra');
-const ListaCompra = require('./lista-compra');
+const Productos = require('./productos');
 const db = require('../config/db');
 
-ListasCompra.hasMany(ListaCompra);
-ListaCompra.belongsTo(ListasCompra);
+ListasCompra.hasMany(Productos);
+Productos.belongsTo(ListasCompra);
 
 db.sync();

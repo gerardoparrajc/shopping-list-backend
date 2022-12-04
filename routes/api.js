@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const listasCompraController = require('../controllers/ListasCompraController');
+const ListasCompraController = require('../controllers/ListasCompraController');
+const ProductosController = require('../controllers/ProductosController');
 
-/* GET home page. */
 router.get('/listas-compra', function(req, res, next) {
-    listasCompraController.getListasCompra()
+    ListasCompraController.getListasCompra()
         .then((result) => {
             res.send({
                 success: true,
@@ -23,8 +23,8 @@ router.get('/listas-compra', function(req, res, next) {
     // });
 });
 
-router.get('/listas-compra/:id', async function (req, res, next) {
-    listasCompraController.getListaCompra(req.params.id)
+router.get('/listas-compra/:id', function (req, res, next) {
+    ListasCompraController.getListaCompra(req.params.id)
         .then((result) => {
             if (result) {
                 res.send({
@@ -47,7 +47,7 @@ router.get('/listas-compra/:id', async function (req, res, next) {
 });
 
 router.post('/listas-compra', function (req, res, next) {
-    listasCompraController.saveListaCompra(req.body)
+    ListasCompraController.saveListaCompra(req.body)
         .then((response) => {
             res.send({
                 success: true,
@@ -65,7 +65,7 @@ router.post('/listas-compra', function (req, res, next) {
 router.put('/listas-compra/:id', function (req, res, next) {
     const data = req.body;
     data.id = req.params.id;
-    listasCompraController.updateListaCompra(data)
+    ListasCompraController.updateListaCompra(data)
         .then((response) => {
             if (response) {
                 res.send({
@@ -88,7 +88,7 @@ router.put('/listas-compra/:id', function (req, res, next) {
 });
 
 router.delete('/listas-compra/:id', function (req, res, next) {
-    listasCompraController.deleteListaCompra(req.params.id)
+    ListasCompraController.deleteListaCompra(req.params.id)
         .then((response) => {
             if (response) {
                 res.send({
@@ -108,6 +108,124 @@ router.delete('/listas-compra/:id', function (req, res, next) {
                 error: error.message
             });
         })
+});
+
+router.get('/listas-compra/:id/productos', function (req, res, next) {
+    ProductosController.getProductos(req.params.id)
+        .then((response) => {
+            if (response) {
+                res.send({
+                    success: true,
+                    data: response
+                });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se ha encontrado la lista de la compra'
+                });
+            }
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                error: error.message
+            });
+        });
+});
+
+router.get('/productos/:idProducto', function (req, res, next) {
+    ProductosController.getProducto(req.params.idProducto)
+        .then((response) => {
+            if (response) {
+                res.send({
+                    success: true,
+                    data: response.get({ plain: true })
+                });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se ha encontrado el producto'
+                });
+            }
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                error: error.message
+            });
+        });
+})
+
+router.post('/listas-compra/:id/productos', function (req, res, next) {
+    ProductosController.saveProducto(req.params.id, req.body)
+        .then((response) => {
+            if (response) {
+                res.send({
+                    success: true,
+                    data: response.get({ plain: true })
+                });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se ha podido añadir el producto'
+                });
+            }
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                error: error.message
+            });
+        });
+});
+
+router.put('/productos/:idProducto', function (req, res, next) {
+    const data = req.body;
+    data.id = req.params.idProducto;
+
+    ProductosController.updateProducto(data)
+        .then((response) => {
+            if (response) {
+                res.send({
+                    success: true,
+                    data: data
+                });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se ha encontrado el producto a actualizar'
+                });
+            }
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                error: error.message
+            });
+        });
+});
+
+router.delete('/productos/:idProducto', function (req, res, next) {
+    ProductosController.deleteProducto(req.params.idProducto)
+        .then((response) => {
+            if (response) {
+                res.send({
+                    success: true,
+                    data: response
+                });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se ha podido borrar el producto'
+                });
+            }
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                error: error.message
+            });
+        });
 });
 
 module.exports = router;

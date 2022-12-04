@@ -1,7 +1,7 @@
 const db = require('../config/db');
 const { DataTypes } = require('sequelize');
 
-const ListaCompra = db.define('ListaCompra', {
+const Productos = db.define('Productos', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -17,4 +17,4 @@ const ListaCompra = db.define('ListaCompra', {
     }
 });
 
-module.exports = ListaCompra;
+module.exports = Productos;
