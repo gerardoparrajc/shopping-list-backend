@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require('body-parser');
+const db = require('./config/db');
+const associations = require('./models/associations');
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -19,6 +22,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+db.authenticate()
+  .then((result) => console.log('Conexión establecida a la base de datos'))
+  .catch((error) => console.log('No se ha podido conectar a la base de datos'));
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
