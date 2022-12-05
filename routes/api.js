@@ -17,10 +17,6 @@ router.get('/listas-compra', function(req, res, next) {
                 error: 'Se ha producido un error al intentar obtener las Listas de la Compra'
             });
         });
-    
-    // res.send({
-    //     hola: 'mundo'
-    // });
 });
 
 router.get('/listas-compra/:id', function (req, res, next) {
@@ -49,10 +45,26 @@ router.get('/listas-compra/:id', function (req, res, next) {
 router.post('/listas-compra', function (req, res, next) {
     ListasCompraController.saveListaCompra(req.body)
         .then((response) => {
-            res.send({
-                success: true,
-                data: response.get({ plain: true })
-            });
+            if (response) {
+                ListasCompraController.getListasCompra()
+                    .then((result) => {
+                        res.send({
+                            success: true,
+                            data: result
+                        });
+                    })
+                    .catch((error) => {
+                        res.send({
+                            success: false,
+                            error: 'Se ha producido un error al intentar obtener las Listas de la Compra'
+                        });
+                    });
+            } else {
+                res.send({
+                    success: false,
+                    error: 'No se han podido crear la lista de la compra'
+                });
+            }            
         })
         .catch((error) => {
             res.send({
@@ -91,10 +103,19 @@ router.delete('/listas-compra/:id', function (req, res, next) {
     ListasCompraController.deleteListaCompra(req.params.id)
         .then((response) => {
             if (response) {
-                res.send({
-                    success: true,
-                    data: response
-                });
+                ListasCompraController.getListasCompra()
+                    .then((result) => {
+                        res.send({
+                            success: true,
+                            data: result
+                        });
+                    })
+                    .catch((error) => {
+                        res.send({
+                            success: false,
+                            error: 'Se ha producido un error al intentar obtener las Listas de la Compra'
+                        });
+                    });
             } else {
                 res.send({
                     success: false,
