@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 const ListasCompraController = require('../controllers/ListasCompraController');
 const ProductosController = require('../controllers/ProductosController');
+const rutasProtegidas = require('../middleware/rutasProtegidas');
 
-router.get('/listas-compra', function(req, res, next) {
+router.get('/listas-compra', rutasProtegidas, function(req, res, next) {
     ListasCompraController.getListasCompra()
         .then((result) => {
             res.send({
@@ -19,7 +20,7 @@ router.get('/listas-compra', function(req, res, next) {
         });
 });
 
-router.get('/listas-compra/:id', function (req, res, next) {
+router.get('/listas-compra/:id', rutasProtegidas, function (req, res, next) {
     ListasCompraController.getListaCompra(req.params.id)
         .then((result) => {
             if (result) {
@@ -42,7 +43,7 @@ router.get('/listas-compra/:id', function (req, res, next) {
         });
 });
 
-router.post('/listas-compra', function (req, res, next) {
+router.post('/listas-compra', rutasProtegidas, function (req, res, next) {
     ListasCompraController.saveListaCompra(req.body)
         .then((response) => {
             if (response) {
@@ -74,7 +75,7 @@ router.post('/listas-compra', function (req, res, next) {
         });
 });
 
-router.put('/listas-compra/:id', function (req, res, next) {
+router.put('/listas-compra/:id', rutasProtegidas, function (req, res, next) {
     const data = req.body;
     data.id = req.params.id;
     ListasCompraController.updateListaCompra(data)
@@ -99,7 +100,7 @@ router.put('/listas-compra/:id', function (req, res, next) {
         })
 });
 
-router.delete('/listas-compra/:id', function (req, res, next) {
+router.delete('/listas-compra/:id', rutasProtegidas, function (req, res, next) {
     ListasCompraController.deleteListaCompra(req.params.id)
         .then((response) => {
             if (response) {
@@ -131,7 +132,7 @@ router.delete('/listas-compra/:id', function (req, res, next) {
         })
 });
 
-router.get('/listas-compra/:id/productos', function (req, res, next) {
+router.get('/listas-compra/:id/productos', rutasProtegidas, function (req, res, next) {
     ProductosController.getProductos(req.params.id)
         .then((response) => {
             if (response) {
@@ -154,7 +155,7 @@ router.get('/listas-compra/:id/productos', function (req, res, next) {
         });
 });
 
-router.get('/productos/:idProducto', function (req, res, next) {
+router.get('/productos/:idProducto', rutasProtegidas, function (req, res, next) {
     ProductosController.getProducto(req.params.idProducto)
         .then((response) => {
             if (response) {
@@ -177,7 +178,7 @@ router.get('/productos/:idProducto', function (req, res, next) {
         });
 })
 
-router.post('/listas-compra/:id/productos', function (req, res, next) {
+router.post('/listas-compra/:id/productos', rutasProtegidas, function (req, res, next) {
     ProductosController.saveProducto(req.params.id, req.body)
         .then((response) => {
             if (response) {
@@ -200,7 +201,7 @@ router.post('/listas-compra/:id/productos', function (req, res, next) {
         });
 });
 
-router.put('/productos/:idProducto', function (req, res, next) {
+router.put('/productos/:idProducto', rutasProtegidas, function (req, res, next) {
     const data = req.body;
     data.id = req.params.idProducto;
 
@@ -226,7 +227,7 @@ router.put('/productos/:idProducto', function (req, res, next) {
         });
 });
 
-router.delete('/productos/:idProducto', function (req, res, next) {
+router.delete('/productos/:idProducto', rutasProtegidas, function (req, res, next) {
     ProductosController.deleteProducto(req.params.idProducto)
         .then((response) => {
             if (response) {

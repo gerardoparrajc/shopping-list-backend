@@ -5,9 +5,4 @@ const db = new Sequelize({
     storage: 'shopping-list.sqlite3'
 });
 
-// ListasCompra.hasMany(ListaCompra);
-// ListaCompra.belongsTo(ListasCompra);
-
-// db.sync();
-
 module.exports = db;

@@ -1,12 +1,13 @@
 const listasCompra = require('../models/listas-compra');
-const listaCompra = require('../models/productos');
+const Productos = require('../models/productos');
+const associations = require('../models/associations');
 const db = require('../config/db');
 
 const listasCompraController = {};
 
 listasCompraController.getListasCompra = function() {
     return listasCompra.findAll({
-        include: listaCompra
+        include: Productos
     });
 }
 
