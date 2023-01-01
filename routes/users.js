@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 router.post('/login', (req, res, next) => {
-  if (req.body.usuario === 'usuario' && req.body.password === '123456') {
+  if ((req.body.usuario === 'usuario' || req.body.email === 'usuario@gmail.com') && req.body.password === '123456') {
     const payload = {
       check: true
     };
@@ -17,7 +17,7 @@ router.post('/login', (req, res, next) => {
       data: token
     });
   } else {
-    res.send({
+    res.status(403).send({
       success: false,
       error: 'Usuario o contraseña incorrectos'
     });
