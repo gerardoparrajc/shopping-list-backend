@@ -1,6 +1,9 @@
 # Shopping List Backend
 Backend de ejemplo para la aplicación Shopping List del curso de Angular 14
 
+## Instalar dependencias
+Ejecutar `npm install`
+
 ## Levantar el servidor
 Abrir una terminal en la carpeta donde está el proyecto y ejecutar:
 
