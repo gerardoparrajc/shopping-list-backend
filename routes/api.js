@@ -5,7 +5,7 @@ const ProductosController = require('../controllers/ProductosController');
 
 router.get('/listas-compra', function(req, res, next) {
     ListasCompraController.getListasCompra()
-        .then((result) => {
+        .then((result) => {            
             res.send({
                 success: true,
                 data: result
